@@ -47,4 +47,19 @@ public class AttendanceService {
     public void deleteAttendance(Long id) {
         attendanceRepository.deleteById(id);
     }
+    public double calculateAttendancePercentage(Long userId, Long subjectId) {
+
+        List<Attendance> records =
+                attendanceRepository.findByUserIdAndSubjectId(userId, subjectId);
+
+        if (records.isEmpty()) {
+            return 0.0;
+        }
+
+        long presentCount = records.stream()
+                .filter(Attendance::getStatus)
+                .count();
+
+        return (presentCount * 100.0) / records.size();
+    }
 }

@@ -126,4 +126,17 @@ public class AttendanceController {
 
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("/subject/{subjectId}/percentage")
+    public ResponseEntity<Double> getAttendancePercentage(
+            @PathVariable Long subjectId,
+            Authentication authentication) {
+
+        User user = userRepository.findByEmail(authentication.getName())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        double percentage = attendanceService
+                .calculateAttendancePercentage(user.getId(), subjectId);
+
+        return ResponseEntity.ok(percentage);
+    }
 }
