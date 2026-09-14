@@ -30,9 +30,6 @@ public class Assignment {
     @Column(nullable = false)
     private Boolean completed = false;
 
-    public Assignment() {
-    }
-
     public Assignment(Long userId, Long subjectId, String title,
                       String description, LocalDateTime deadline) {
         this.userId = userId;
